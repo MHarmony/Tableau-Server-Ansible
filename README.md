@@ -13,7 +13,7 @@
 ### Prerequisites
 
 * Ansible - Developed and tested on version [2.7](https://docs.ansible.com/ansible/2.7/installation_guide/intro_installation.html)
-* Access to a machine running CentOS 7.3 (>=7.3 and <=8.X) that meets the [minimum requirements](https://help.tableau.com/current/server-linux/en-us/server_hardware_min.htm) where you will install Tableau Server
+* Access to a machine running [CentOS 7.3](http://mirror.centos.org/centos/7/) (>=7.3 and <=8.X) that meets the [minimum requirements](https://help.tableau.com/current/server-linux/en-us/server_hardware_min.htm) where you will install Tableau Server
 * If configuring OpenID, access to an Identity Provider that is configured to work with Tableau Server
 * If configuring forward and reverse proxies, access to a forward and reverse proxy that is configured to work with Tableau Server
 * If configuring SMTP, access to an SMTP server with valid credentials
