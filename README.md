@@ -5,8 +5,8 @@
 ## Getting Started
 
 1. Clone the repository
-2. Edit [playbook.yml](paybook.yml) to include the roles you want to run
-3. Edit [tableau_server.yml](tableau_server.yml) to change host vars and [hosts.yml](hosts.yml) to change host connection vars
+2. Edit [playbook.yml](playbook.yml) to include the roles you want to run
+3. Edit [tableau_server.yml](inventory/host_vars/tableau_server.yml) to change host vars and [hosts.yml](inventory/hosts.yml) to change host connection vars
 4. Edit the role specific default files to set your environment-specific defaults
 5. Run the ansible script!
 
