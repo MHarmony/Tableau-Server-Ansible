@@ -1,0 +1,59 @@
+---
+
+- name: Fail if activated_offline is not defined
+  fail:
+    msg: Missing required variable `activated_offline`
+  when: activated_offline is not defined
+  run_once: yes
+
+- name: Fail if obliterate_script is not defined
+  fail:
+    msg: Missing required variable `obliterate_script`
+  when: obliterate_script is not defined
+  run_once: yes
+
+- name: Fail if cleanup_leftover_directories is not defined
+  fail:
+    msg: Missing required variable `cleanup_leftover_directories`
+  when: cleanup_leftover_directories is not defined
+  run_once: yes
+
+- name: Fail if remove_licensing is not defined
+  fail:
+    msg: Missing required variable `remove_licensing`
+  when: remove_licensing is not defined
+  run_once: yes
+
+- name: Fail if temp_files_dir is not defined
+  fail:
+    msg: Missing required variable `temp_files_dir`
+  when:
+    - cleanup_leftover_directories
+    - temp_files_dir is not defined
+  run_once: yes
+
+- name: Fail if remove_tsm_admin_user is not defined
+  fail:
+    msg: Missing required variable `remove_tsm_admin_user`
+  when: remove_tsm_admin_user is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when:
+    - remove_tsm_admin_user
+    - tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes

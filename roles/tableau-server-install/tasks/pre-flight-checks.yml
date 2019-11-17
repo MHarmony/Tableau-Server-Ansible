@@ -1,0 +1,271 @@
+---
+
+- name: Fail if installer_version_major is not defined
+  fail:
+    msg: Missing required variable `installer_version_major`
+  when: installer_version_major is not defined
+  run_once: yes
+
+- name: Fail if installer_version_minor is not defined
+  fail:
+    msg: Missing required variable `installer_version_minor`
+  when: installer_version_minor is not defined
+  run_once: yes
+
+- name: Fail if installer_version_patch is not defined
+  fail:
+    msg: Missing required variable `installer_version_patch`
+  when: installer_version_patch is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_salt is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_salt`
+  when: tsm_admin_salt is not defined
+  run_once: yes
+
+- name: Fail if tableau_user_salt is not defined
+  fail:
+    msg: Missing required variable `tableau_user_salt`
+  when: tableau_user_salt is not defined
+  run_once: yes
+
+- name: Fail if temp_files_dir is not defined
+  fail:
+    msg: Missing required variable `temp_files_dir`
+  when: temp_files_dir is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_version_major is not defined
+  fail:
+    msg: Missing required variable `automated_installer_version_major`
+  when: automated_installer_version_major is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_version_minor is not defined
+  fail:
+    msg: Missing required variable `automated_installer_version_minor`
+  when: automated_installer_version_minor is not defined
+  run_once: yes
+
+- name: Fail if tableau_svc_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_svc_directory`
+  when: tableau_svc_directory is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_svc_directory is not defined
+  fail:
+    msg: Missing required variable `automated_installer_svc_directory`
+  when: automated_installer_svc_directory is not defined
+  run_once: yes
+
+- name: Fail if artifact_repo_base is not defined
+  fail:
+    msg: Missing required variable `artifact_repo_base`
+  when: artifact_repo_base is not defined
+  run_once: yes
+
+- name: Fail if installer_rpm_package is not defined
+  fail:
+    msg: Missing required variable `installer_rpm_package`
+  when: installer_rpm_package is not defined
+  run_once: yes
+
+- name: Fail if installer_rpm_package_url is not defined
+  fail:
+    msg: Missing required variable `installer_rpm_package_url`
+  when: installer_rpm_package_url is not defined
+  run_once: yes
+
+- name: Fail if tableau_http_port is not defined
+  fail:
+    msg: Missing required variable `tableau_http_port`
+  when: tableau_http_port is not defined
+  run_once: yes
+
+- name: Fail if tableau_ssl_redirect_enabled is not defined
+  fail:
+    msg: Missing required variable `tableau_ssl_redirect_enabled`
+  when: tableau_ssl_redirect_enabled is not defined
+  run_once: yes
+
+- name: Fail if tableau_public_host_name is not defined
+  fail:
+    msg: Missing required variable `tableau_public_host_name`
+  when: tableau_public_host_name is not defined
+  run_once: yes
+
+- name: Fail if tableau_public_http_port is not defined
+  fail:
+    msg: Missing required variable `tableau_public_http_port`
+  when: tableau_public_http_port is not defined
+  run_once: yes
+
+- name: Fail if tableau_hsts_enabled is not defined
+  fail:
+    msg: Missing required variable `tableau_hsts_enabled`
+  when: tableau_hsts_enabled is not defined
+  run_once: yes
+
+- name: Fail if tableau_repository_ssl_enabled is not defined
+  fail:
+    msg: Missing required variable `tableau_repository_ssl_enabled`
+  when: tableau_repository_ssl_enabled is not defined
+  run_once: yes
+
+- name: Fail if tableau_admin_username is not defined
+  fail:
+    msg: Missing required variable `tableau_admin_username`
+  when: tableau_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tableau_admin_password is not defined
+  fail:
+    msg: Missing required variable `tableau_admin_password`
+  when: tableau_admin_password is not defined
+  run_once: yes
+
+- name: Fail if registration_details_zip is not defined
+  fail:
+    msg: Missing required variable `registration_details_zip`
+  when: registration_details_zip is not defined
+  run_once: yes
+
+- name: Fail if registration_details_country is not defined
+  fail:
+    msg: Missing required variable `registration_details_country`
+  when: registration_details_country is not defined
+  run_once: yes
+
+- name: Fail if registration_details_city is not defined
+  fail:
+    msg: Missing required variable `registration_details_city`
+  when: registration_details_city is not defined
+  run_once: yes
+
+- name: Fail if registration_details_last_name is not defined
+  fail:
+    msg: Missing required variable `registration_details_last_name`
+  when: registration_details_last_name is not defined
+  run_once: yes
+
+- name: Fail if registration_details_industry is not defined
+  fail:
+    msg: Missing required variable `registration_details_industry`
+  when: registration_details_industry is not defined
+  run_once: yes
+
+- name: Fail if registration_details_eula is not defined
+  fail:
+    msg: Missing required variable `registration_details_eula`
+  when: registration_details_eula is not defined
+  run_once: yes
+
+- name: Fail if registration_details_title is not defined
+  fail:
+    msg: Missing required variable `registration_details_title`
+  when: registration_details_title is not defined
+  run_once: yes
+
+- name: Fail if registration_details_phone is not defined
+  fail:
+    msg: Missing required variable `registration_details_phone`
+  when: registration_details_phone is not defined
+  run_once: yes
+
+- name: Fail if registration_details_company is not defined
+  fail:
+    msg: Missing required variable `registration_details_company`
+  when: registration_details_company is not defined
+  run_once: yes
+
+- name: Fail if registration_details_state is not defined
+  fail:
+    msg: Missing required variable `registration_details_state`
+  when: registration_details_state is not defined
+  run_once: yes
+
+- name: Fail if registration_details_department is not defined
+  fail:
+    msg: Missing required variable `registration_details_department`
+  when: registration_details_department is not defined
+  run_once: yes
+
+- name: Fail if registration_details_first_name is not defined
+  fail:
+    msg: Missing required variable `registration_details_first_name`
+  when: registration_details_first_name is not defined
+  run_once: yes
+
+- name: Fail if registration_details_email is not defined
+  fail:
+    msg: Missing required variable `registration_details_email`
+  when: registration_details_email is not defined
+  run_once: yes
+
+- name: Fail if installer_install_directory is not defined
+  fail:
+    msg: Missing required variable `installer_install_directory`
+  when: installer_install_directory is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_rpm_package is not defined
+  fail:
+    msg: Missing required variable `automated_installer_rpm_package`
+  when: automated_installer_rpm_package is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_rpm_package_url is not defined
+  fail:
+    msg: Missing required variable `automated_installer_rpm_package_url`
+  when: automated_installer_rpm_package_url is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_install_directory is not defined
+  fail:
+    msg: Missing required variable `automated_installer_install_directory`
+  when: automated_installer_install_directory is not defined
+  run_once: yes
+
+- name: Fail if automated_installer_args is not defined
+  fail:
+    msg: Missing required variable `automated_installer_args`
+  when: automated_installer_args is not defined
+  run_once: yes
+
+- name: Fail if postgresql_driver_rpm_package_url is not defined
+  fail:
+    msg: Missing required variable `postgresql_driver_rpm_package_url`
+  when: postgresql_driver_rpm_package_url is not defined
+  run_once: yes
+
+- name: Fail if postgresql_driver_rpm_package is not defined
+  fail:
+    msg: Missing required variable `postgresql_driver_rpm_package`
+  when: postgresql_driver_rpm_package is not defined
+  run_once: yes
+
+- name: Fail if artifact_repo_rpm_dir is not defined
+  fail:
+    msg: Missing required variable `artifact_repo_rpm_dir`
+  when: artifact_repo_rpm_dir is not defined
+  run_once: yes
+
+- name: Fail if artifact_repo_connectors_dir is not defined
+  fail:
+    msg: Missing required variable `artifact_repo_connectors_dir`
+  when: artifact_repo_connectors_dir is not defined
+  run_once: yes

@@ -1,0 +1,14 @@
+---
+
+# Public address of the Tableau Server
+tableau_public_host_name: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+
+# List of reverse proxies, separate with a comma
+reverse_proxy_address_list: reverseproxy
+
+# Enter any alternate names for the reverse proxy server, such as its FQDN, non-FQDNs, and aliases. Separate with a comma
+reverse_proxy_alternate_names_list: reverseproxy
+
+# If the proxy server is using SSL to communicate, this will set the port used to 443 instead of 80
+# If the proxy server is using SSL to communicate with Tableau Server, SSL must be configured and enabled on Tableau Server
+reverse_proxy_ssl_enabled: true

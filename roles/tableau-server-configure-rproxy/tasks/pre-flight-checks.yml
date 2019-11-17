@@ -1,0 +1,55 @@
+---
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if tableau_public_host_name is not defined
+  fail:
+    msg: Missing required variable `tableau_public_host_name`
+  when: tableau_public_host_name is not defined
+  run_once: yes
+
+- name: Fail if reverse_proxy_address_list is not defined
+  fail:
+    msg: Missing required variable `reverse_proxy_address_list`
+  when: reverse_proxy_address_list is not defined
+  run_once: yes
+
+- name: Fail if reverse_proxy_alternate_names_list is not defined
+  fail:
+    msg: Missing required variable `reverse_proxy_alternate_names_list`
+  when: reverse_proxy_alternate_names_list is not defined
+  run_once: yes
+
+- name: Fail if reverse_proxy_ssl_enabled is not defined
+  fail:
+    msg: Missing required variable `reverse_proxy_ssl_enabled`
+  when: reverse_proxy_ssl_enabled is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes

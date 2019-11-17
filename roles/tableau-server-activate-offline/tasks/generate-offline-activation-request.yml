@@ -1,0 +1,8 @@
+---
+
+- name: Generate an offline activation request file
+  command: "{{ tableau_bin_directory }}/tsm licenses get-offline-activation-file -k {{ product_key }} -o {{ activation_file_directory }} -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name:  Display offline activation instructions
+  debug:
+    msg: "Navigate to https://www.tableau.com/support/activation on a computer with internet access and upload the offline.tlq file generated in {{ activation_file_directory }} in order to receive a first or second-pass offline activation file"

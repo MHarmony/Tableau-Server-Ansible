@@ -1,0 +1,21 @@
+---
+
+- name: Set the Tableau Server FQDN
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.public.host -v '{{ tableau_public_host_name }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name: Set the IPv4 address or CNAME of the reverse proxy server
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.trusted -v '{{ reverse_proxy_address_list }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name: Set the alternative names of the reverse proxy server
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.trusted_hosts -v '{{ reverse_proxy_alternate_names_list }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when: reverse_proxy_alternate_names_list != ""
+
+- name: Enable SSL (443) for the reverse proxy server
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.public.port -v 443 -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when: reverse_proxy_ssl_enabled
+
+- name: Apply the reverse proxy settings
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+  when: role_level_reboot

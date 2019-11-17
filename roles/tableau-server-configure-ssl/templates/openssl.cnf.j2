@@ -1,0 +1,22 @@
+[req]
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+[req_distinguished_name]
+C = {{ cert_country }}
+ST = {{ cert_state }}
+L = {{ cert_locality }}
+O = {{ cert_organization }}
+OU = {{ cert_organizational_unit }}
+CN = {{ cert_common_name }}
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+{% for dns in dns_list %}
+DNS.{{loop.index}} = {{ dns }}
+{% endfor %}
+{% for ip in ip_list %}
+IP.{{loop.index}} = {{ ip }}
+{% endfor %}

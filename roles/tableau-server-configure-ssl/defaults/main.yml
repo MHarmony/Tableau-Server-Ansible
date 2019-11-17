@@ -1,0 +1,47 @@
+---
+
+# Enable SSL for encrypted communications on all traffic between the PostgreSQL repository and other server components
+enable_repository_ssl: true
+
+# Enable SSL for encrypted communications between Tableau Server and clients
+enable_external_ssl: true
+
+# Does not require SSL for direct connections by "tableau" or "readonly" users for connections between the repository and other server components
+repository_ssl_internal_only: false
+
+# The path to the SSL certificate for configuring external SSL
+ssl_cert_file: tableau.crt
+
+# The path to the SSL key file for configuring external SSL
+ssl_key_file: tableau.key
+
+# Optional: The path to the SSL chain file for configuring external SSL
+ssl_chain_file:
+
+# Optional: The passphrase to use for configuring external SSL
+ssl_passphrase:
+
+# If true, generates a self-signed cert to configure External SSL with
+generate_ssl_cert: true
+
+# List of DNSs to add as SAN entries in the self-signed cert
+dns_list: [
+  "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+]
+
+# List of IPs to add as SAN entries in the self-signed cert
+ip_list: [
+  "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+]
+
+cert_country: US
+cert_state: VA
+cert_locality: Chantilly
+cert_organization: Organization
+cert_organizational_unit: Unit
+cert_common_name: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+
+# List the TLS protocol versions you want to allow or disallow
+# Default setting: "all, -SSLv2, -SSLv3"
+# For example, to allow TLS v1.2 and deny SSL v2, SSL v3, TLS v1, and TLS v1.1, the setting wuold be "all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1"
+tls_protocols: all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1

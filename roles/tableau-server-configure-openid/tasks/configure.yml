@@ -1,0 +1,60 @@
+---
+
+- name: Copy Tableau Server OpenID file onto guest
+  template:
+    src: openid.json.j2
+    dest: "{{ temp_files_dir }}/openid.json"
+    owner: "{{ tsm_admin_username }}"
+    mode: 0777
+  become: true
+
+- name: Enable OpenID event logging
+  command: "{{ tableau_bin_directory}}/tsm configuration set -k vizportal.log.level -v debug"
+
+- name: Import the OpenID settings
+  command: "{{ tableau_bin_directory }}/tsm settings import -f {{ temp_files_dir }}/openid.json -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name: Ensure the ssl directory exists
+  file:
+    path: "{{ ssl_cert_location }}"
+    state: directory
+    owner: tableau
+    group: tableau
+    mode: 0770
+  when: openid_import_certificate
+  become: true
+
+- name: Move the certificate file onto the Tableau Server instance
+  copy:
+    src: "{{ openid_ssl_certificate }}"
+    dest: "{{ ssl_cert_location }}"
+    owner: tableau
+    group: tableau
+    mode: 0770
+  when: openid_import_certificate
+  become: true
+
+- name: Import the OpenID certificate into the Java cacerts Keystore
+  java_cert:
+    cert_alias: "{{ openid_ssl_certificate_alias }}"
+    cert_path: "{{ openid_ssl_certificate }}"
+    keystore_pass: "{{ cacerts_keystore_password }}"
+    keystore_path: "{{ cacerts_keystore_path }}"
+    executable: "{{ keytool_path }}"
+    state: present
+  when: openid_import_certificate
+  become: true
+
+- name: Apply the OpenID settings
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+  when: role_level_reboot
+
+- name: Cleanup Temporary Files
+  file:
+    path: "{{ temp_files_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - "openid.json"
+  become: true

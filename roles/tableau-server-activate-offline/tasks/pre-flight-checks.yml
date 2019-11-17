@@ -1,0 +1,85 @@
+---
+
+- name: Fail if generate_only is not defined
+  fail:
+    msg: Missing required variable `generate_only`
+  when: generate_only is not defined
+  run_once: yes
+
+- name: Fail if activate_only is not defined
+  fail:
+    msg: Missing required variable `activate_only`
+  when: activate_only is not defined
+  run_once: yes
+
+- name: Fail if first_activation is not defined
+  fail:
+    msg: Missing required variable `first_activation`
+  when:
+    - activate_only
+    - first_activation is not defined
+  run_once: yes
+
+- name: Fail if first_pass_activation_file is not defined
+  fail:
+    msg: Missing required variable `first_pass_activation_file`
+  when:
+    - activate_only
+    - first_activation
+    - first_pass_activation_file is not defined
+  run_once: yes
+
+- name: Fail if second_pass_activation_file is not defined
+  fail:
+    msg: Missing required variable `second_pass_activation_file`
+  when:
+    - activate_only
+    - not first_activation
+    - second_pass_activation_file is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if product_key is not defined
+  fail:
+    msg: Missing required variable `product_key`
+  when:
+    - generate_only
+    - product_key is not defined
+  run_once: yes
+
+- name: Fail if activation_file_directory is not defined
+  fail:
+    msg: Missing required variable `activation_file_directory`
+  when:
+    - generate_only
+    - activation_file_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes

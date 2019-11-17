@@ -1,0 +1,103 @@
+---
+
+- name: Fail if disable_old_tls_versions is not defined
+  fail:
+    msg: Missing required variable `disable_old_tls_versions`
+  when: disable_old_tls_versions is not defined
+  run_once: yes
+
+- name: Fail if disable_triple_des_suite is not defined
+  fail:
+    msg: Missing required variable `disable_triple_des_suite`
+  when: disable_triple_des_suite is not defined
+  run_once: yes
+
+- name: Fail if generate_fresh_secrets is not defined
+  fail:
+    msg: Missing required variable `generate_fresh_secrets`
+  when: generate_fresh_secrets is not defined
+  run_once: yes
+
+- name: Fail if disable_rest_api is not defined
+  fail:
+    msg: Missing required variable `disable_rest_api`
+  when: disable_rest_api is not defined
+  run_once: yes
+
+- name: Fail if disable_jmx_service is not defined
+  fail:
+    msg: Missing required variable `disable_jmx_service`
+  when: disable_jmx_service is not defined
+  run_once: yes
+
+- name: Fail if apply_lifetime_limit is not defined
+  fail:
+    msg: Missing required variable `apply_lifetime_limit`
+  when: apply_lifetime_limit is not defined
+  run_once: yes
+
+- name: Fail if lifetime_limit is not defined
+  fail:
+    msg: Missing required variable `lifetime_limit`
+  when: lifetime_limit is not defined
+  run_once: yes
+
+- name: Fail if idle_limit is not defined
+  fail:
+    msg: Missing required variable `idle_limit`
+  when: idle_limit is not defined
+  run_once: yes
+
+- name: Fail if allowed_paths is not defined
+  fail:
+    msg: Missing required variable `allowed_paths`
+  when: allowed_paths is not defined
+  run_once: yes
+
+- name: Fail if enable_hsts is not defined
+  fail:
+    msg: Missing required variable `enable_hsts`
+  when: enable_hsts is not defined
+  run_once: yes
+
+- name: Fail if hsts_max_age is not defined
+  fail:
+    msg: Missing required variable `hsts_max_age`
+  when: hsts_max_age is not defined
+  run_once: yes
+
+- name: Fail if change_referrer_policy is not defined
+  fail:
+    msg: Missing required variable `change_referrer_policy`
+  when: change_referrer_policy is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes

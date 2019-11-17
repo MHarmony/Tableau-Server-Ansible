@@ -1,0 +1,40 @@
+---
+
+- name: Fail if Tableau Server was activated offline
+  fail:
+    msg: Tableau Server was activated offline, please check the tableau-server-deactivate-offline role to correctly deactivate Tableau Server before obliterating. Set the activate_offline deault to false to proceed
+  when: activated_offline
+  run_once: yes
+
+- name: Run the Tableau Server obliterate script (without deactivating active licenses)
+  command: "{{ obliterate_script }} -y -y -y"
+  when:
+    - not activated_offline
+    - not remove_licensing
+  become: true
+
+- name: Run the Tableau Server obliterate script (attempt to deactivate active licenses)
+  command: "{{ obliterate_script }} -y -y -y -l"
+  when:
+    - not activated_offline
+    - remove_licensing
+  become: true
+
+- name: Cleanup leftover Tableau Server directories
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "/var/opt/tableau/"
+    - "/opt/tableau/"
+    - "{{ temp_files_dir }}"
+  when: cleanup_leftover_directories
+  become: true
+
+- name: Remove the Tableau Services Manager (TSM) user
+  user:
+    name: "{{ tsm_admin_username }}"
+    state: absent
+    remove: yes
+  when: remove_tsm_admin_user
+  become: true

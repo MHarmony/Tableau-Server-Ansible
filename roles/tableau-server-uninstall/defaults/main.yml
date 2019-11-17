@@ -1,0 +1,18 @@
+---
+
+# True if Tableau Server was activated offline
+activated_offline: false
+
+# True if you want to attempt to remove any active licenses
+# All licensing information is removed whether or not deactivation is successful
+# Check the tableau-server-deactivate-offline role for explicit license deactivation
+remove_licensing: true
+
+# Path to the Tableau Server obliterate script
+obliterate_script: "{{ tableau_packages_directory }}/scripts.{{ tableau_build_version }}/tableau-server-obliterate"
+
+# Cleanup leftover directories
+cleanup_leftover_directories: true
+
+# Remove the Tableau Services Manager (TSM) admin user
+remove_tsm_admin_user: true

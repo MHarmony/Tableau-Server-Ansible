@@ -1,0 +1,29 @@
+---
+
+# Tableau Server installer version parts
+installer_version_major: 2019
+installer_version_minor: 1
+installer_version_patch: 9
+# The directory for Tableau Server packages
+# Don't change this
+tableau_packages_directory: /opt/tableau/tableau_server/packages
+# The build version of Tableau Server
+tableau_build_version: "20191.19.1017.2120"
+# The bin directory for Tableau Server
+# Contains the "tsm" script to perform setup and configuration
+# Don't change this
+tableau_bin_directory: "{{ tableau_packages_directory }}/bin.{{ tableau_build_version }}"
+# The username of the Tableau Services Manager (TSM) admin
+tsm_admin_username: user
+# The password of the TSM admin
+tsm_admin_password: password
+# Directory to place temporary files used during installation and initial configuration
+temp_files_dir: /tmp/temp_tableau_files
+# Set to true to run the pre-flight-checks task in each role before the main role tasks are executed
+include_pre_flight_checks: false
+# Tableau SSL cert directory
+ssl_cert_location: /var/opt/tableau/tableau_server/data/ssl
+# Tableau jre directory
+tableau_jre_directory: "{{ tableau_packages_directory }}/repository.{{ tableau_build_version }}/jre"
+# Run role-level Tableau Server reboot tasks
+role_level_reboot: false

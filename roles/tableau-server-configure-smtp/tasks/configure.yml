@@ -1,0 +1,26 @@
+---
+
+- name: Copy Tableau Server SMTP file onto guest
+  template:
+    src: smtp.json.j2
+    dest: "{{ temp_files_dir }}/smtp.json"
+    owner: "{{ tsm_admin_username }}"
+    mode: 0777
+  become: true
+
+- name: Import the SMTP settings
+  command: "{{ tableau_bin_directory }}/tsm settings import -f {{ temp_files_dir }}/smtp.json -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name: Apply the SMTP settings
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+  when: role_level_reboot
+  
+- name: Cleanup Temporary Files
+  file:
+    path: "{{ temp_files_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - "smtp.json"
+  become: true

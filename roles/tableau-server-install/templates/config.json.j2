@@ -1,0 +1,20 @@
+{
+  "configEntities": {
+    "gatewaySettings": {
+      "_type": "gatewaySettingsType",
+      "port": {{ tableau_http_port }},
+      "sslRedirectEnabled": {{ tableau_ssl_redirect_enabled | bool | lower }},
+      "sslEnabled": {{ tableau_repository_ssl_enabled | bool | lower }},
+      "sslPort": 443,
+      "publicHost": "{{ tableau_public_host_name }}",
+      "publicPort": {{ tableau_public_http_port }}
+    },
+    "identityStore": {
+      "_type": "identityStoreType",
+      "type": "local"
+    }
+  },
+  "configKeys": {
+      "gateway.http.hsts": {{ tableau_hsts_enabled | bool | lower }}
+  }
+}

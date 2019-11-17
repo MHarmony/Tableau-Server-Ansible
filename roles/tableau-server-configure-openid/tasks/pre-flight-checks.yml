@@ -1,0 +1,119 @@
+---
+
+- name: Fail if openid_client_id is not defined
+  fail:
+    msg: Missing required variable `openid_client_id`
+  when: openid_client_id is not defined
+  run_once: yes
+
+- name: Fail if openid_client_secret is not defined
+  fail:
+    msg: Missing required variable `openid_client_secret`
+  when: openid_client_secret is not defined
+  run_once: yes
+
+- name: Fail if openid_config_url is not defined
+  fail:
+    msg: Missing required variable `openid_config_url`
+  when: openid_config_url is not defined
+  run_once: yes
+
+- name: Fail if openid_external_url is not defined
+  fail:
+    msg: Missing required variable `openid_external_url`
+  when: openid_external_url is not defined
+  run_once: yes
+
+- name: Fail if openid_username_claim is not defined
+  fail:
+    msg: Missing required variable `openid_username_claim`
+  when: openid_username_claim is not defined
+  run_once: yes
+
+- name: Fail if openid_import_certificate is not defined
+  fail:
+    msg: Missing required variable `openid_import_certificate`
+  when: openid_import_certificate is not defined
+  run_once: yes
+
+- name: Fail if openid_ssl_certificate is not defined
+  fail:
+    msg: Missing required variable `openid_ssl_certificate`
+  when:
+    - openid_import_certificate
+    - openid_ssl_certificate is not defined
+  run_once: yes
+
+- name: Fail if openid_ssl_certificate_alias is not defined
+  fail:
+    msg: Missing required variable `openid_ssl_certificate_alias`
+  when:
+    - openid_import_certificate
+    - openid_ssl_certificate_alias is not defined
+  run_once: yes
+
+- name: Fail if cacerts_keystore_password is not defined
+  fail:
+    msg: Missing required variable `cacerts_keystore_password`
+  when:
+    - openid_import_certificate
+    - cacerts_keystore_password is not defined
+  run_once: yes
+
+- name: Fail if cacerts_keystore_path is not defined
+  fail:
+    msg: Missing required variable `cacerts_keystore_path`
+  when:
+    - openid_import_certificate
+    - cacerts_keystore_path is not defined
+  run_once: yes
+
+- name: Fail if cacerts_keystore_type is not defined
+  fail:
+    msg: Missing required variable `cacerts_keystore_type`
+  when:
+    - openid_import_certificate
+    - cacerts_keystore_type is not defined
+  run_once: yes
+
+- name: Fail if temp_files_dir is not defined
+  fail:
+    msg: Missing required variable `openid_external_url`
+  when: temp_files_dir is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_jre_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_jre_directory`
+  when: tableau_jre_directory is not defined
+  run_once: yes
+
+- name: Fail if ssl_cert_location is not defined
+  fail:
+    msg: Missing required variable `ssl_cert_location`
+  when: ssl_cert_location is not defined
+  run_once: yes

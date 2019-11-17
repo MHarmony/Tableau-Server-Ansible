@@ -1,0 +1,35 @@
+---
+- name: Ensure any pending changes are applied before stopping
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+
+- name: Stop Tableau Server
+  command: "{{ tableau_bin_directory }}/tsm stop -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- name: Copy proxy config file onto guest
+  template:
+    src: proxy.conf.j2
+    dest: "/home/tableau/{{ proxy_config_path }}"
+    owner: tableau
+    group: tableau
+  become: true
+
+- name: Reboot the Tableau Server Machine
+  shell: "sleep 5 && reboot"
+  async: 1
+  poll: 0
+
+- name: Wait for reboot and reconnect
+  wait_for:
+    port: 22
+    host: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+    search_regex: OpenSSH
+    delay: 120 # Wait 2 minutes for the server to get situated
+    timeout: 300
+  connection: local
+
+- name: Start Tableau Server
+  command: "{{ tableau_bin_directory }}/tsm start -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30

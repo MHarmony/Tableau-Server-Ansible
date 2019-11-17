@@ -1,0 +1,12 @@
+{
+    "configKeys": {
+        "svcmonitor.notification.smtp.server": "{{ smtp_server_url }}",
+        "svcmonitor.notification.smtp.send_account": "{{ smtp_username }}",
+        "svcmonitor.notification.smtp.password": "{{ smtp_password }}",
+        "svcmonitor.notification.smtp.port": {{ smtp_port }},
+        "svcmonitor.notification.smtp.ssl_enabled": {{ smtp_ssl_enabled | bool | lower }},
+        "svcmonitor.notification.smtp.from_address": "{{ smtp_from_address }}",
+        "svcmonitor.notification.smtp.target_addresses": "{{ smtp_server_health_email_list }}",
+        "svcmonitor.notification.smtp.canonical_url": "{{ tableau_server_url }}"
+    }
+}

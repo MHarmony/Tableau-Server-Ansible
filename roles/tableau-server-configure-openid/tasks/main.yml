@@ -1,0 +1,6 @@
+---
+
+- include: pre-flight-checks.yml
+  when: include_pre_flight_checks
+
+- include: configure.yml

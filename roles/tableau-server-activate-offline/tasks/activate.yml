@@ -1,0 +1,15 @@
+---
+
+- name: Activate the first-pass offline activation file
+  command: "{{ tableau_bin_directory }}/tsm licenses activate -f {{ first_pass_activation_file }} -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when: first_activation
+
+- name: Fail if first time activation
+  fail:
+    msg: Since this is the first time activating Tableau Server on this machine, you must generate a second activation file and run this activation file again after setting the correct defaults
+  when: first_activation
+  run_once: yes
+
+- name: Activate the second-pass offline activation file
+  command: "{{ tableau_bin_directory }}/tsm licenses activate -f {{ second_pass_activation_file }} -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when: not first_activation

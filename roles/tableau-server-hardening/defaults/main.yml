@@ -1,0 +1,50 @@
+---
+
+# Allows TLS v1.2 and denies SSL v2, SSL v3, TLS v1, and TLS v1.1
+disable_old_tls_versions: true
+
+# See CVE-2016-2183 for info on why Triple DES is no longer considered secure enough
+disable_triple_des_suite: true
+
+# Tableau recommends that after you install Tableau Server, you generate new encryption keys for your deployment
+generate_fresh_secrets: true
+
+# The REST API interface is enabled by default
+# If no applications will make REST API calls to your installation of Tableau Server, you can disable it
+# IMPORRANT: Tableau Prep uses REST API to access Tableau Server. If your organization uses Tableau Prep, do not disable REST API
+disable_rest_api: false
+
+# JMX is disabled by default. If it's enabled but you're not using it, you should disable it
+disable_jmx_service: true
+
+# By default, Tableau Server does not have an absolute session timeout
+# Client sessions can remain open indefinitely if the Tableau Server inactivity timeout (default 240 minutes) is not exceeded
+# Be sure to set your absolute session timeout in a range that allows the longest-running extract or publishing operations in your organization
+apply_lifetime_limit: true
+# Default is 1440 minutes
+lifetime_limit: 1440
+# Default is 240 minutes
+idle_limit: 240
+
+# By default, Tableau Server allows authorized Tableau Server users to build workbooks that use files on the server as file-based data sources (such as spreadsheets)
+# In this scenario, files are accessed by the tableau system account
+# To prevent unwanted access to files, Tableau recommends that you configure safelist (sometimes referred to as "whitelist") functionality
+# This lets you limit tableau account access to just the directory paths where you host data files
+##
+# Make sure the file paths you specify in this procedure exist on the server
+# If the paths do not exist when the computer starts, Tableau Server will not start
+##
+# If you want to specify multiple paths, separate them with a semicolon, as in this example: /datasources;/HR/data
+allowed_paths: 
+
+# When a conforming browser encounters a web application running HSTS, then all communications with the service must be over a secured (HTTPS) connection
+enable_hsts: true
+# By default, HSTS policy is set for one year (31536000 seconds)
+# This time period specifies the amount of time in which the browser will access the server over HTTPS
+# You should consider setting a short max-age during initial roll-out of HSTS
+hsts_max_age: 31536000
+
+# Only for Tableau Server 2019.2 and above
+# Tableau recommend setting the referrer policy to same-origin, which only sends referrer information to same-site origins
+# Requests from outside the site will not receive referrer information.
+change_referrer_policy: true

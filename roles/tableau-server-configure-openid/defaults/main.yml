@@ -1,0 +1,35 @@
+---
+
+# Specifies the provider client ID that your IdP has assigned to your application.
+openid_client_id: tableau
+
+# Specifies the provider client secret. This is a token that is used by Tableau to verify the authenticity of the response from the IdP.
+# This value is a secret and should be kept securely.
+openid_client_secret: 12345-12345-12345-12345
+
+# Specifies provider configuration URL.
+openid_config_url: openid-config-url
+
+# The URL of your Tableau server. This is typically is the public name of your server, such as http://example.tableau.com.
+openid_external_url: openid-external-url
+
+# Change this value to the IdP claim that your organization will use to match user names as stored in Tableau Server.
+openid_username_claim: email
+
+# True if using uncommon or self-signed certificate on the IdP
+openid_import_certificate: true
+
+# Path to the IdP SSL certificate
+openid_ssl_certificate: cert.cer
+
+# Alias to use when importing the certificate into the keystore
+openid_ssl_certificate_alias: cert_alias
+
+# Java cacerts keystore password (default is changeit)
+cacerts_keystore_password: changeit
+
+# Path to the Java cacerts keystore
+cacerts_keystore_path: "{{ tableau_jre_directory }}/lib/security/cacerts"
+
+# Path to keytool (included with Tableau Server install)
+keytool_path: "{{ tableau_jre_directory }}/bin/keytool"

@@ -1,0 +1,97 @@
+---
+
+- name: 1. Update Tableau Server to the latest version
+  debug:
+    msg: "If not done already, it is recommended to upgrade to the latest version of Tableau Server"
+
+- name: 2. Configure SSL/TLS for external communications
+  debug:
+    msg: "If not configured already, it is recommended to require SSL for all external connections using a valid, trusted certificate"
+
+- name: 3. Disable older versions of TLS
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k ssl.protocols -v 'all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1'"
+  when: disable_old_tls_versions
+
+- name: 4. Disable Triple-DES cipher suite
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k ssl.ciphersuite -v 'HIGH:MEDIUM:!aNULL:!MD5:!RC4:!3DES'"
+  when: disable_triple_des_suite
+
+- name: 5. Configure SSL for internal communications
+  debug:
+    msg: "If not configured already, it is recommended to require SSL for all internal connections"
+
+- name: 6. Enable firewall protection
+  debug:
+    msg: "For added security, it is recommended to use and configure a firewall, adding exceptions as needed to allow Tableau Server to function properly"
+
+- name: 7. Restrict access to the Tableau Server machine and to important directories
+  debug:
+    msg: "For added security, restrict physical access to the machine hosting Tableau Server and ensure only authorized users have access to the /var/opt/tableau/tableau_server folder"
+
+- name: 8. Generate fresh secrets and tokens
+  command: "{{ tableau_bin_directory }}/tsm security regenerate-internal-tokens"
+  when: generate_fresh_secrets
+
+- name: 9. Disable unused services
+  debug:
+    msg: "If unused, disable services for increased security. Edit defaults/main.yml to disable these services"
+
+- name: 9.1. Disable REST API
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k api.server.enabled -v false"
+  when: disable_rest_api
+
+- name: 9.2. Disable JMX Service
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k service.jmx_enabled -v false"
+  when: disable_jmx_service
+
+- name: 10. Verify session lifetime configuration
+  debug:
+    msg: "For added security, the default session and lifetime limits can be changed. Edit defaults/main.yml to change these limits"
+
+- name: 10.1. Apply lifetime limit
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k wgserver.session.apply_lifetime_limit -v true"
+  when: apply_lifetime_limit
+
+- name: 10.2. Set lifetime limit value
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k wgserver.session.lifetime_limit -v {{ lifetime_limit }}"
+  when: apply_lifetime_limit
+
+- name: 10.3. Set idle limit value
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k wgserver.session.idle_limit -v {{ idle_limit }}"
+  when: apply_lifetime_limit
+
+- name: 11. Restrict allowed paths for the tableau system user
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k native_api.allowed_paths -v '{{ allowed_paths }}'"
+  when: allowed_paths is not defined
+
+- name: 12. Enable HSTS
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.http.hsts -v true"
+  when: enable_hsts
+
+- name: 12.1 Change HSTS policy time period
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.http.hsts_options -v max-age={{ hsts_max_age }}"
+  when: enable_hsts
+
+- name: 13. Disable guest access
+  debug:
+    msg:
+      - "To disable guest access at the server level:"
+      - "1. In the site menu, click Manage All Sites and then click Settings > General"
+      - "2. For Guest Access, clear the Enable Guest account check box"
+      - "3. Click save"
+      - "To disable Guest access for a site:"
+      - "1. In the site menu, select a site"
+      - "2. Click Settings, and on the Settings page, clear the Enable Guest account check box"
+
+- name: 14. Set referrer-policy HTTP header to same-origin (Tableau Server v >= 2019.2 only)
+  command: "{{ tableau_bin_directory }}/tsm configuration set -k gateway.http.referrer_policy -v same-origin"
+  when:
+    - installer_version_major >= 2019
+    - installer_version_minor >= 2
+    - change_referrer_policy
+
+- name: Apply the hardening settings
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+  when: role_level_reboot

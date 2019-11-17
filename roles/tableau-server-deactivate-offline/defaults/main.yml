@@ -1,0 +1,16 @@
+---
+
+# Set to true if you want to only generate an offline deactivation request file
+generate_only: true
+
+# Set to true if you want to only deactivate Tableau Server
+deactivate_only: false
+
+# Tableau Server product key
+product_key: 1234-1234-1234-1234-1234
+
+# Target directory to save the activation file in
+deactivation_file_directory: /tmp/
+
+# Path to the first-pass activation file
+deactivation_file: deactivation.tlr

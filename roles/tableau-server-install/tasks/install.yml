@@ -1,0 +1,169 @@
+---
+
+- name: Create Tableau Server Automated Installer path
+  file:
+    path: "{{ automated_installer_install_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Create Tableau Server Installer path
+  file:
+    path: "{{ installer_install_directory }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+# This can be an existing user
+- name: Create "{{ tsm_admin_username }} user"
+  user:
+    name: "{{ tsm_admin_username }}"
+    password: "{{ tsm_admin_password | password_hash('sha512', tsm_admin_salt) }}"
+    state: present
+    update_password: on_create
+  become: true
+
+- name: Create temporary install file directory
+  file:
+    path: "{{ temp_files_dir }}"
+    owner: root
+    group: root
+    mode: 0777
+    state: directory
+  become: true
+
+- name: Download the Tableau Server automated installer package
+  get_url:
+    url: "{{ automated_installer_rpm_package_url }}"
+    dest: "{{ temp_files_dir }}"
+  register: dl_automated_installer
+
+- name: Install Tableau Server automated installer package
+  yum:
+    name: "{{ temp_files_dir }}/{{ automated_installer_rpm_package }}"
+    state: present
+  when: dl_automated_installer is succeeded
+  become: true
+
+- name: Copy Tableau Server config file onto guest
+  template:
+    src: config.json.j2
+    dest: "{{ temp_files_dir }}/config.json"
+    owner: "{{ tsm_admin_username }}"
+    mode: 0777
+  become: true
+
+- name: Copy Tableau Server registration file onto guest
+  template:
+    src: registration.json.j2
+    dest: "{{ temp_files_dir }}/registration.json"
+    owner: "{{ tsm_admin_username }}"
+    mode: 0777
+  become: true
+
+- name: Copy Tableau Server secrets file onto guest
+  template:
+    src: secrets.txt.j2
+    dest: "{{ temp_files_dir }}/secrets.txt"
+    owner: "{{ tsm_admin_username }}"
+    mode: 0777
+  become: true
+
+- name: Install dos2unix
+  yum:
+    name: dos2unix
+    state: present
+  become: true
+
+# Still an open issue on GitHub. Tableau Installer doesn't ensure secrets.txt is in LF format before proceeding
+- name: Ensure secrets.txt is in LF format
+  command: dos2unix {{ temp_files_dir }}/secrets.txt
+  become: true
+  
+- name: Get Tableau Server automated installer version
+  shell: "ls {{ automated_installer_install_directory }} | grep automated-installer"
+  register: auto_install_version
+
+- name: Download the Tableau Server installer package
+  get_url:
+    url: "{{ installer_rpm_package_url }}"
+    dest: "{{ temp_files_dir }}"
+    tmp_dest: "{{ temp_files_dir }}"
+  register: dl_tableau_server
+  async: 1200
+  poll: 15
+
+- name: Install python2 firewall package (Required to use firewalld ansible module)
+  yum:
+    name: python-firewall
+    state: present
+  become: true
+
+- name: Start the firewalld service
+  systemd:
+    state: started
+    name: firewalld
+    enabled: yes
+  become: true
+
+- name: "Ensure Tableau Gateway port {{ tableau_http_port }} is open"
+  firewalld:
+    permanent: yes
+    port: "{{ tableau_http_port }}/tcp"
+    state: enabled
+  become: true
+
+- name: Ensure TSM port 8850 is open
+  firewalld:
+    permanent: yes
+    port: 8850/tcp
+    state: enabled
+  become: true
+
+- name: Ensure port 443 is open for SSL
+  firewalld:
+    permanent: yes
+    port: 443/tcp
+    state: enabled
+  become: true
+
+- name: Reload firewalld
+  command: "firewall-cmd --reload"
+  become: true
+
+- name: Install Tableau Server
+  command: "{{ automated_installer_install_directory }}/{{ auto_install_version.stdout }}/automated-installer {{ automated_installer_args }}"
+  when: dl_tableau_server is succeeded
+  async: 1200
+  poll: 30
+  become: true
+
+- name: Download the PostgreSQL Driver package
+  get_url:
+    url: "{{ postgresql_driver_rpm_package_url }}"
+    dest: "{{ temp_files_dir }}"
+    tmp_dest: "{{ temp_files_dir }}"
+  register: dl_postgresql_driver
+  async: 60
+  poll: 5
+
+- name: Install the PostgreSQL Driver package
+  yum:
+    name: "{{ temp_files_dir }}/{{ postgresql_driver_rpm_package }}"
+    state: present
+  when: dl_postgresql_driver is succeeded
+  become: true
+
+- name: Cleanup Temporary Files
+  file:
+    path: "{{ temp_files_dir }}/{{ item }}"
+    state: absent
+  with_items:
+    - "config.json"
+    - "registration.json"
+    - "secrets.txt"
+  become: true

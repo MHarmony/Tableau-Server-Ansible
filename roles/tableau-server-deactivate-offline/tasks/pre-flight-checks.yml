@@ -1,0 +1,67 @@
+---
+
+- name: Fail if generate_only is not defined
+  fail:
+    msg: Missing required variable `generate_only`
+  when: generate_only is not defined
+  run_once: yes
+
+- name: Fail if deactivate_only is not defined
+  fail:
+    msg: Missing required variable `deactivate_only`
+  when: deactivate_only is not defined
+  run_once: yes
+
+- name: Fail if deactivation_file_directory is not defined
+  fail:
+    msg: Missing required variable `deactivation_file_directory`
+  when:
+    - generate_only
+    - deactivation_file_directory is not defined
+  run_once: yes
+
+- name: Fail if product_key is not defined
+  fail:
+    msg: Missing required variable `product_key`
+  when:
+    - generate_only
+    - product_key is not defined
+  run_once: yes
+
+- name: Fail if deactivation_file is not defined
+  fail:
+    msg: Missing required variable `deactivation_file`
+  when:
+    - deactivate_only
+    - deactivation_file is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes

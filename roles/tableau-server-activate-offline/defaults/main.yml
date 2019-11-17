@@ -1,0 +1,23 @@
+---
+
+# Set to true if you want to only generate an offline activation request file
+generate_only: false
+
+# Set to true if you want to only activate Tableau Server
+activate_only: true
+
+# Tableau Server product key
+product_key: 1234-1234-1234-1234-1234
+
+# Target directory to save the activation file in
+activation_file_directory: /tmp/
+
+# Set to true if this is the first time activating Tableau Server on this install
+# If true, only one pass of activation is needed instead of two
+first_activation: false
+
+# Path to the first-pass activation file
+first_pass_activation_file: first_pass_activation.tlf
+
+# Path to the second-pass activation file
+second_pass_activation_file: second_pass_activation.tlf

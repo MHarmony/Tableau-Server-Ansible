@@ -1,0 +1,85 @@
+---
+
+- name: Fail if smtp_server_url is not defined
+  fail:
+    msg: Missing required variable `smtp_server_url`
+  when: smtp_server_url is not defined
+  run_once: yes
+
+- name: Fail if smtp_username is not defined
+  fail:
+    msg: Missing required variable `smtp_username`
+  when:
+    - smtp_server_requires_authentication
+    - smtp_username is not defined
+  run_once: yes
+
+- name: Fail if smtp_password is not defined
+  fail:
+    msg: Missing required variable `smtp_password`
+  when:
+    - smtp_server_requires_authentication
+    - smtp_password is not defined
+  run_once: yes
+
+- name: Fail if smtp_port is not defined
+  fail:
+    msg: Missing required variable `smtp_port`
+  when: smtp_port is not defined
+  run_once: yes
+
+- name: Fail if smtp_ssl_enabled is not defined
+  fail:
+    msg: Missing required variable `smtp_ssl_enabled`
+  when: smtp_ssl_enabled is not defined
+  run_once: yes
+
+- name: Fail if smtp_server_health_email_list is not defined
+  fail:
+    msg: Missing required variable `smtp_server_health_email_list`
+  when: smtp_server_health_email_list is not defined
+  run_once: yes
+
+- name: Fail if tableau_server_url is not defined
+  fail:
+    msg: Missing required variable `tableau_server_url`
+  when:
+    - smtp_include_footer_link
+    - tableau_server_url is not defined
+  run_once: yes
+
+- name: Fail if smtp_from_address is not defined
+  fail:
+    msg: Missing required variable `smtp_from_address`
+  when: smtp_from_address is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes

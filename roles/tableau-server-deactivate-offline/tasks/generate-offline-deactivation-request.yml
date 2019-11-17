@@ -1,0 +1,7 @@
+---
+
+- name: Generate an offline deactivation request file
+  command: "{{ tableau_bin_directory }}/tsm licenses get-offline-deactivation-file -k {{ product_key }} -o {{ deactivation_file_directory }} -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+
+- debug:
+    msg: "Navigate to https://www.tableau.com/support/activation on a computer with internet access and upload the deactivate.tlq file generated in {{ deactivation_file_directory }} in order to receive the deactivation file"

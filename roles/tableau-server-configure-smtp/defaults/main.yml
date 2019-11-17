@@ -1,0 +1,36 @@
+---
+
+# The URL of the SMTP server
+smtp_server_url: my.smtp.server.com
+
+# True if the SMTP server requires authentication?
+smtp_server_requires_authentication: true
+
+# The username to use to authenticate with the SMTP server
+smtp_username: username@test.com
+
+# The passwrod to use to authenticate with the SMTP server
+smtp_password: password
+
+# The port to be used to communicate with the SMTP server
+# Common SMTP Ports:
+# Default: 25
+# SSL: 465
+# TLS: 587
+# Alternate TLS: 2525
+smtp_port: 587
+
+# Enable SSL communication with the SMTP server
+smtp_ssl_enabled: true
+
+# The address to use in the 'from' field for all emails sent by Tableau Server
+smtp_from_address: tableau_server@test.com
+
+# The list of emails to send server health messages to, separate by commas
+smtp_server_health_email_list: username@test.com
+
+# Include the link to the Tableau Server in the footer of all emails sent by Tableau Server
+smtp_include_footer_link: true
+
+# The URL of the Tableau Server to include in email footers
+tableau_server_url: http://my.tableau.server.com

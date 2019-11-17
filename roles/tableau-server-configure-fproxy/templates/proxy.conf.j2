@@ -1,0 +1,17 @@
+# Always edit this file on Tableau Server as the unprivileged user. By default, tableau, is the unprivileged user created by Tableau Server during installation.
+# Set environment variables http_proxy and https_proxy to point to your proxy host.
+# For example, to set the proxy to example-host for ports 80 and 443, run the following commands:
+#
+http_proxy={{ http_proxy }}
+https_proxy={{ https_proxy }}
+#
+# Take care to use 'http' when you specify the URL for the https_proxy environmental variable.
+# Do not specify the 'https' protocol for the value of  the https_proxy environmental variable.
+#
+# To bypass the proxy server, specify exceptions in the no_proxy variable. Use this variable if your proxy server does not route internal addresses.
+# You should also add exceptions to this proxy configuration to guarantee that all communications within a local Tableau Server cluster (if you have one now or will have one later) do not route to the proxy server.
+# For example, to specify exceptions for internal traffic and to another node in the cluster:
+#
+no_proxy="{{ no_proxy_list }}"
+#
+# Where other.node is the host name of another node in the Tableau Server cluster.

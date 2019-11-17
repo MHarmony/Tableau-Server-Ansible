@@ -1,0 +1,4 @@
+---
+
+- name: Deactivate Tableau Server
+  command: "{{ tableau_bin_directory }}/tsm licenses deactivate -f {{ deactivation_file }} -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"

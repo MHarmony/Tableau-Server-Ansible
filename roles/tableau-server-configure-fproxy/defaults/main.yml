@@ -1,0 +1,15 @@
+---
+
+http_proxy: http://my.forwardproxy.com:9080
+
+# Take care to use 'http' when you specify the URL for the https_proxy variable
+# Do not specify the 'https' protocol for the value of the http_proxy variable
+https_proxy: http://my.forwardproxy.com:9080
+
+# To bypass the proxy server, specify exceptions in the no_proxy variable
+# Use this variable if your proxy server does not route internal addresses
+no_proxy_list: 127.0.0.1,localhost
+
+# Path of the forward proxy configuration file
+# Don't change this
+proxy_config_path: .config/systemd/tableau_server.conf.d/20-proxy.conf

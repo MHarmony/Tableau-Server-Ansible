@@ -1,0 +1,10 @@
+---
+
+- include: pre-flight-checks.yml
+  when: include_pre_flight_checks
+
+- include: generate-offline-deactivation-request.yml
+  when: generate_only
+
+- include: deactivate.yml
+  when: deactivate_only

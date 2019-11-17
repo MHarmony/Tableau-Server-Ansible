@@ -1,0 +1,75 @@
+---
+
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if enable_repository_ssl is not defined
+  fail:
+    msg: Missing required variable `enable_repository_ssl`
+  when: enable_repository_ssl is not defined
+  run_once: yes
+
+- name: Fail if repository_ssl_internal_only is not defined
+  fail:
+    msg: Missing required variable `repository_ssl_internal_only`
+  when:
+    - enable_repository_ssl
+    - repository_ssl_internal_only is not defined
+  run_once: yes
+
+- name: Fail if enable_external_ssl is not defined
+  fail:
+    msg: Missing required variable `enable_external_ssl`
+  when: enable_external_ssl is not defined
+  run_once: yes
+
+- name: Fail if ssl_cert_file is not defined
+  fail:
+    msg: Missing required variable `ssl_cert_file`
+  when:
+    - enable_external_ssl
+    - ssl_cert_file is not defined
+  run_once: yes
+
+- name: Fail if ssl_key_file is not defined
+  fail:
+    msg: Missing required variable `ssl_key_file`
+  when:
+    - enable_external_ssl
+    - ssl_key_file is not defined
+  run_once: yes
+
+- name: Fail if ssl_protocols is not defined
+  fail:
+    msg: Missing required variable `ssl_protocols`
+  when:
+    - enable_external_ssl
+    - ssl_protocols is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes

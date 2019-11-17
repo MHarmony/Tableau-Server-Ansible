@@ -1,0 +1,123 @@
+---
+
+- name: Enable repository SSL (for Tableau Server components only)
+  command: "{{ tableau_bin_directory }}/tsm security repository-ssl --internal-only enable -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_repository_ssl
+    - repository_ssl_internal_only
+
+- name: Enable repository SSL (for Tableau Server components & Tableau clients)
+  command: "{{ tableau_bin_directory }/}tsm security repository-ssl enable -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_repository_ssl
+    - not repository_ssl_internal_only
+
+- name: Ensure the ssl directory exists
+  file:
+    path: "{{ ssl_cert_location }}"
+    state: directory
+    owner: tableau
+    group: tableau
+    mode: 0770
+  when: enable_external_ssl
+  become: true
+
+- name: Move the certificate files onto the Tableau Server instance
+  copy:
+    src: "{{ ssl_cert_file }}"
+    dest: "{{ ssl_cert_location }}"
+    owner: tableau
+    group: tableau
+    mode: 0770
+  when:
+    - enable_external_ssl
+    - not generate_ssl_cert
+  become: true
+
+- name: Enable external SSL (with no chain or phassphrase)
+  command: "{{ tableau_bin_directory }}/tsm security external-ssl enable --cert-file {{ ssl_cert_file }} --key-file {{ ssl_key_file }} --protocols '{{ tls_protocols }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_external_ssl
+    - ssl_chain_file is not defined
+    - ssl_passphrase is not defined
+    - not generate_ssl_cert
+
+- name: Enable external SSL (with chain and passphrase)
+  command: "{{ tableau_bin_directory }}/tsm security external-ssl enable --cert-file {{ ssl_cert_file }} --key-file {{ ssl_key_file }} --chain-file {{ ssl_chain_file }} --passphrase {{ ssl_passphrase }} --protocols '{{ tls_protocols }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_external_ssl
+    - ssl_chain_file is defined
+    - ssl_passphrase is defined
+    - not generate_ssl_cert
+
+- name: Enable external SSL (with chain)
+  command: "{{ tableau_bin_directory }}/tsm security external-ssl enable --cert-file {{ ssl_cert_file }} --key-file {{ ssl_key_file }} --chain-file {{ ssl_chain_file }} --protocols '{{ tls_protocols }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_external_ssl
+    - ssl_chain_file is defined
+    - ssl_passphrase is not defined
+    - not generate_ssl_cert
+
+- name: Enable external SSL (with passphrase)
+  command: "{{ tableau_bin_directory }}/tsm security external-ssl enable --cert-file {{ ssl_cert_file }} --key-file {{ ssl_key_file }} --passphrase {{ ssl_passphrase }} --protocols '{{ tls_protocols }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  when:
+    - enable_external_ssl
+    - ssl_chain_file is not defined
+    - ssl_passphrase is defined
+    - not generate_ssl_cert
+
+- name: Copy OpenSSL Config to SSL location
+  template:
+    src: openssl.cnf.j2
+    dest: "{{ ssl_cert_location }}"
+    owner: tableau
+    group: tableau
+    mode: 0770
+  become: true
+  when:
+    - enable_external_ssl
+    - generate_ssl_cert
+
+- name: Generate self-signed cert
+  command: "openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout {{ ssl_cert_location }}/tableau.key -out {{ ssl_cert_location }}/tableau.crt -config {{ ssl_cert_location }}/openssl.cnf"
+  become: true
+  when:
+    - enable_external_ssl
+    - generate_ssl_cert
+
+- name: Change perms of self-signed cert
+  file:
+    path: {{ ssl_cert_location }}/tableau.crt
+    state: touch
+    owner: tableau
+    group: tableau
+    mode: 0770
+  become: true
+  when:
+    - enable_external_ssl
+    - generate_ssl_cert
+
+- name: Change perms of self-signed key
+  file:
+    path: "{{ ssl_cert_location }}/tableau.key"
+    state: touch
+    owner: tableau
+    group: tableau
+    mode: 0770
+  become: true
+  when:
+    - enable_external_ssl
+    - generate_ssl_cert
+
+- name: Enable external SSL (with self-signed cert)
+  command: "{{ tableau_bin_directory }}/tsm security external-ssl enable --cert-file {{ ssl_cert_location }}/tableau.crt --key-file {{ ssl_cert_location }}/tableau.key --protocols '{{ tls_protocols }}' -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  become: true
+  when:
+    - enable_external_ssl
+    - generate_ssl_cert
+
+- name: Apply the SSL settings
+  command: "{{ tableau_bin_directory }}/tsm pending-changes apply --ignore-prompt --ignore-warnings -u {{ tsm_admin_username }} -p {{ tsm_admin_password }}"
+  async: 1200
+  poll: 30
+  when: role_level_reboot

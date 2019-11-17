@@ -1,0 +1,13 @@
+---
+
+- name: Install and configure Tableau Server
+  hosts: tableau_server
+  become: true
+  roles:
+    - name: tableau-server-install
+    - name: tableau-server-configure-openid
+    - name: tableau-server-configure-ssl
+    - name: tableau-server-configure-smtp
+    - name: tableau-server-configure-fproxy
+    - name: tableau-server-configure-rproxy
+    - name: tableau-server-hardening

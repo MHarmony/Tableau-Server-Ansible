@@ -1,0 +1,47 @@
+- name: Fail if tableau_build_version is not defined
+  fail:
+    msg: Missing required variable `tableau_build_version`
+  when: tableau_build_version is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_username is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_username`
+  when: tsm_admin_username is not defined
+  run_once: yes
+
+- name: Fail if tsm_admin_password is not defined
+  fail:
+    msg: Missing required variable `tsm_admin_password`
+  when: tsm_admin_password is not defined
+  run_once: yes
+
+- name: Fail if http_proxy is not defined
+  fail:
+    msg: Missing required variable `http_proxy`
+  when: http_proxy is not defined
+  run_once: yes
+
+- name: Fail if https_proxy is not defined
+  fail:
+    msg: Missing required variable `https_proxy`
+  when: https_proxy is not defined
+  run_once: yes
+
+- name: Fail if no_proxy_list is not defined
+  fail:
+    msg: Missing required variable `no_proxy_list`
+  when: no_proxy_list is not defined
+  run_once: yes
+
+- name: Fail if tableau_packages_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_packages_directory`
+  when: tableau_packages_directory is not defined
+  run_once: yes
+
+- name: Fail if tableau_bin_directory is not defined
+  fail:
+    msg: Missing required variable `tableau_bin_directory`
+  when: tableau_bin_directory is not defined
+  run_once: yes

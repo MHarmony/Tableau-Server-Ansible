@@ -1,0 +1,81 @@
+---
+
+# The salt to use for hashing the Tableau Services Manager (TSM) Admin password
+tsm_admin_salt: salt123
+
+# The salt to use for hashing the unpriviledged "tableau" user
+tableau_user_salt: salt123
+
+# The port the Tableau Server Gateway will listen on
+tableau_http_port: 80
+
+# Enabled SSL redirection
+tableau_ssl_redirect_enabled: true
+
+# The public host name of the Tableau Server
+tableau_public_host_name: "{{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}"
+
+# The port that clients use to access the gateway process on Tableau Server over HTTP/HTTPS
+# This can be modified if using a proxy or NAT between the gateway and clients
+tableau_public_http_port: 80
+
+# Enable HTTP Strict Transport Security (HSTS)
+tableau_hsts_enabled: true
+
+# True if you want to enable repository SSL
+tableau_repository_ssl_enabled: true
+
+# The username of the initial Tableau Server admin
+tableau_admin_username: user
+
+# The password of the initial Tableau Server admin
+tableau_admin_password: password
+
+# Registration details
+registration_details_zip: 20151
+registration_details_country: United States
+registration_details_city: Chantilly
+registration_details_last_name: Jones
+registration_details_industry: Developer/Engineer
+registration_details_eula: yes
+registration_details_title: IT Director
+registration_details_phone: 941-867-5309
+registration_details_company: Company
+registration_details_state: Virginia
+registration_details_department: IT
+registration_details_first_name: Jim
+registration_details_email: user@test.com
+
+# Name of the Tableau Server rpm package
+installer_rpm_package: "tableau-server-{{ installer_version_major }}-{{ installer_version_minor }}-{{ installer_version_patch }}.x86_64.rpm"
+
+# URL of the Tableau Server rpm package
+installer_rpm_package_url: "https://downloads.tableau.com/esdalt/{{ installer_version_major }}.{{ installer_version_minor }}.{{ installer_version_patch }}/{{ installer_rpm_package }}"
+
+# Install directory for Tableau Server
+# Don't change this
+installer_install_directory: /opt/tableau/tableau_server
+
+# Tableau Server Automated Installer version parts
+automated_installer_version_major: 2019
+automated_installer_version_minor: 1
+
+# Name of the Tableau Server Automated Installer rpm packages
+automated_installer_rpm_package: "tableau-server-automated-installer-{{ automated_installer_version_major }}-{{ automated_installer_version_minor }}.noarch.rpm"
+
+# URL of the Tableau Server Automated Installer rpm package
+automated_installer_rpm_package_url: "https://github.com/tableau/server-install-script-samples/raw/master/linux/automated-installer/packages/{{ automated_installer_rpm_package }}"
+
+# Default install directory for the Tableau Server Automated Installer
+# Don't change this
+automated_installer_install_directory: /opt/tableau/tableau_server_automated_installer
+
+# Arugments to use for the automated installer
+# Don't change this
+automated_installer_args: "-a {{ tsm_admin_username }} -s {{ temp_files_dir }}/secrets.txt -f {{ temp_files_dir }}/config.json -r {{ temp_files_dir }}/registration.json --accepteula {{ temp_files_dir }}/{{ installer_rpm_package }} -v"
+
+# PostgreSQL Database Driver URL
+postgresql_driver_rpm_package_url: "https://downloads.tableau.com/drivers/linux/yum/tableau-driver/{{ postgresql_driver_rpm_package }}"
+
+# PostgreSQL Database Driver RPM package
+postgresql_driver_rpm_package: tableau-postgresql-odbc-09.06.0500-1.x86_64.rpm
