@@ -24,7 +24,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/MHarmony/eaffc76b00fe76599
 
 ## Authors
 
-* **Michael Harmon** - [GitHub](https://github.com/MHarmony)
+* **MHarmony** - [GitHub](https://github.com/MHarmony)
 
 ## License
 
