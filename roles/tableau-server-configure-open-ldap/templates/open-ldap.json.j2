@@ -1,0 +1,37 @@
+{
+  "configEntities":{
+		"identityStore": {
+			"_type": "identityStoreType",
+			"type": "activedirectory",
+			"domain": "",
+			"root": "{{ domain_name }}",
+			"nickname": "{{ domain_nickname }}",
+			"hostname": "{{ ldap_hostname }}",
+			"port": "{{ ldap_port }}",
+			"directoryServiceType": "openldap",
+			"bind": "simple",
+			"username": "{{ ldap_username }}",
+			"password": "{{ ldap_password }}",
+            "membersRetrievalPageSize": "{{ members_retrieval_page_size }}",
+			"identityStoreSchemaType": {
+			   "userBaseFilter": "{{ user_base_filter }}",
+			   "userUsername": "{{ user_username }}",
+			   "userDisplayName": "{{ user_display_name }}",
+			   "userEmail": "{{ user_email }}",
+			   "userCertificate": "{{ user_certificate }}",
+			   "userThumbnail": "{{ user_thumbnail }}",
+			   "userJpegPhoto": "{ user_jpeg_photo }",
+			   "groupBaseFilter": "{{ group_base_filter }}",
+			   "groupName": "{{ group_name }}",
+			   "groupEmail": "{{ group_email }}",
+			   "groupDescription": "{{ group_description }}",
+			   "member": "{{ group_member_attribute }}",
+			   "distinguishedNameAttribute": "{{ distinguished_name_attribute }}",
+			   "serverSideSorting": "{{ server_side_sorting }}",
+			   "rangeRetrieval": "{{ range_retrieval }}",
+			   "userClassNames": {{ user_class_names }},
+			   "groupClassNames": {{ group_class_names }}
+			}
+		}
+    }
+}

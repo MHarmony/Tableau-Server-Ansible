@@ -1,5 +1,4 @@
 ---
-
 - name: Copy Tableau Server OpenID file onto guest
   template:
     src: openid.json.j2
@@ -30,7 +29,7 @@
     dest: "{{ ssl_cert_location }}"
     owner: tableau
     group: tableau
-    mode: 0770
+    mode: "0770"
   when: openid_import_certificate
   become: true
 

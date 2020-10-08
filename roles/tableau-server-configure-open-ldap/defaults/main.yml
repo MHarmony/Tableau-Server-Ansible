@@ -1,0 +1,98 @@
+---
+# The domain of the computer where you installed Tableau Server
+domain_name: ou=sosoa,dc=example,dc=com
+
+# The NetBIOS name of the domain. If not required, leave blank
+domain_nickname:
+
+# The hostname, or IP address, of the LDAP server
+# The host that you specify here will be used for user/group queries on the primary domain
+# In the case where user/group queries are in other domains, Tableau Server will query DNS to identify the appropriate domain controller
+ldap_hostname: 10.0.1.171
+
+# The non-secure port of the LDAP server. Normally 389
+ldap_port: 32389
+
+# The secure port of the LDAP server. Normally 636
+ldaps_port: 32389
+
+# The DN of the user you want to use to connect to the LDAP server
+ldap_username: cn=Manager,dc=example,dc=com
+
+# The password of the user that you want to use to connect to the LDAP server
+ldap_password: admin
+
+# The filter that you want to use for users of Tableau Server
+# For example, you might specify an object class attribute and an organization unit attribute.
+user_base_filter: (&(objectClass=inetOrgPerson)(objectClass=organizationalPerson))
+
+# The attribute that corresponds to user names on your LDAP server
+user_username: uid
+
+# The attribute that corresponds to user display names on your LDAP server
+user_display_name:
+
+# The attribute that corresponds to user email addresses on your LDAP server
+user_email: mail
+
+# The attribute that corresponds to user certificates on your LDAP server
+user_certificate:
+
+# The attribute that corresponds to user thumbnail images on your LDAP server
+user_thumbnail:
+
+# The attribute that corresponds to user profile images on your LDAP server
+user_jpeg_photo:
+
+# The filter that you want to use for groups of users of Tableau Server
+# For example, you might specify an object class attribute and an organization unit attribute
+group_base_filter: (objectClass=groupofNames)
+
+# The attribute that corresponds to group names on your LDAP server
+group_name: groupname
+
+# The attribute that corresponds to group email addresses on your LDAP server
+group_email:
+
+# The attribute that corresponds to group descriptions on your LDAP server
+group_description:
+
+# The attribute that describes the list of users in a group
+grou_member_attribute:
+
+# The attribute that stores the distinguished names of users
+# This attribute is optional, but it greatly improves the performance of LDAP queries
+distinguished_name_attribute:
+
+# Whether the LDAP server is configured for server-side sorting of query results
+# If your LDAP server supports server-side sorting, set this option to true
+# If you are unsure whether your LDAP server supports this, enter false, as misconfiguration may cause errors
+server_side_sorting: true
+
+# Whether the LDAP server is configured to return a range of query results for a request
+# This means that groups with many users will be requested in small sets instead of all at once
+# LDAP servers that support range retrieval will perform better for large queries. If your LDAP server supports range retrieval, set this option to true
+# If you are unsure whether your LDAP server supports range retrieval, enter false, as misconfiguration may cause errors
+range_retrieval: true
+
+# This option determines the maximum number of results returned by an LDAP query
+# For example, consider a scenario where Tableau Server is importing an LDAP group that contains 50,000 users
+# Attempting to import such a large number of users in a single operation is not a best practice
+# When this option is set to 1500, Tableau Server imports the first 1500 users in the first response
+# After those users are processed, Tableau Server requests the next 1500 users from the LDAP server, and so forth
+# We recommend that you modify this option only to accommodate the requirements of your LDAP server
+members_retrieval_page_size: 1000
+
+# By default Tableau Server looks for LDAP group object classes containing the string “group”
+# If your LDAP group objects do not fit the default class name, override the default by setting this value
+# You can provide multiple classnames separated by commas
+# This option takes a list of strings, which requires passing each class in quotes, separated by a comma (no space) and within brackets
+# For example: ["basegroup","othergroup"]
+group_class_names:
+
+# By default Tableau Server looks for LDAP user object classes containing the string “user” and “inetOrgPerson”
+# If your LDAP user objects do not use these default class names, override the default by setting this value
+# You can provide multiple classnames separated by commas
+# This option takes a list of strings, which requires passing each class in quotes, separated by a comma (no space) and within brackets
+# For example: ["userclass1",userclass2”]
+user_class_names: ["inetOrgPerson","organizationalPerson"]
